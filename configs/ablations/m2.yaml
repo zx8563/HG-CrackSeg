@@ -1,0 +1,52 @@
+project_name: HG-CrackSeg
+run_name: m2
+model:
+  architecture: hg_crackseg
+  in_channels: 3
+  classes: 2
+  base_c: 32
+  img_size: 512
+  use_hessian_branch: true
+  edge_guidance_levels: 2
+  use_large_kernel: false
+  use_aspp: false
+  use_attention_gate: true
+  hessian_sigmas:
+  - 1.0
+  - 2.0
+  - 4.0
+  hessian_max_kernel_size: 25
+  hessian_residual_scale: 0.03
+  hessian_dark_gate_sharpness: 8.0
+data:
+  root_dir: ./Steelcrack
+  batch_size: 8
+  num_workers: 0
+  pin_memory: false
+  persistent_workers: false
+  normalization: imagenet
+loss:
+  name: single_hard_dice_loss
+  kwargs:
+    ce_weight: 1.0
+    hard_dice_weight: 1.0
+    k: 50.0
+    threshold: 0.5
+    smooth: 1.0e-06
+    class_weight: null
+training:
+  epochs: 100
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  eta_min: 1.0e-06
+  device: cuda
+  save_dir: ./checkpoints
+  init_weight: null
+  operator_freeze_epochs: 5
+  ops_lr_scale: 0.008
+  gradient_clip_norm: 1.0
+  save_interval: 5
+  seed: 42
+  wandb_mode: disabled
+  optimizer: AdamW
+  scheduler: CosineAnnealingLR

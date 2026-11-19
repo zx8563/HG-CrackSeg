@@ -1,0 +1,31 @@
+output_dir: outputs/robustness
+device: cuda:0
+batch_size: 1
+num_workers: 0
+pin_memory: true
+image_size: 512
+threshold: 0.5
+normalization: imagenet
+require_positive: true
+save_per_image: true
+save_visualizations: false
+seed: 42
+benchmark:
+  enabled: true
+  warmup: 50
+  runs: 200
+  repeats: 3
+  batch_size: 1
+datasets:
+  include_clean: true
+  clean_root: Steelcrack/Test
+  corruption_root: Steelcrack-C
+  clean_count: 530
+  corruption_count: 530
+  include_corruptions: true
+models:
+- id: hg_crackseg
+  name: HG-CrackSeg
+  config: configs/hg_crackseg.yaml
+  checkpoint: checkpoints/hg_crackseg/best_model.pth
+  normalization: imagenet

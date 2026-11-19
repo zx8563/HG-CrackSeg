@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv*/
+.idea/
+.vscode/
+Steelcrack/
+Steelcrack-C/
+checkpoints/
+outputs/
+wandb/
+*.pth
+*.pt
+*.ckpt
+*.tmp
+.DS_Store
